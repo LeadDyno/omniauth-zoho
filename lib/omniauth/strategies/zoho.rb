@@ -28,9 +28,9 @@ module OmniAuth
 
       credentials do
         hash = {"token" => access_token.token}
-        hash.merge!("refresh_token" => access_token.refresh_token) if access_token.expires? && access_token.refresh_token
-        hash.merge!("expires_at" => Time.now.to_i + 3600)
-        hash.merge!("expires" => true)
+        hash.merge!("refresh_token" => access_token.refresh_token) if access_token.refresh_token
+        hash.merge!("expires_at" => Time.now.to_i + access_token.params['expires_in_sec'].to_i) if access_token.params['expires_in_sec']
+        hash.merge!("expires" => access_token.expires?)
         hash
       end
 
