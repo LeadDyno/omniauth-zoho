@@ -37,6 +37,10 @@ module OmniAuth
       def raw_info
         @raw_info ||= access_token.get('https://www.zohoapis.com/crm/v2/org').parsed['org'].first
       end
+
+      def callback_url
+        full_host + script_name + callback_path
+      end
     end
   end
 end
