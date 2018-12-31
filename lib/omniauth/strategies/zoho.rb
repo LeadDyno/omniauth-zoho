@@ -11,6 +11,17 @@ module OmniAuth
       }
 
       option provider_ignores_state: true
+      option :authorize_options, %i[access_type prompt scope]
+
+      def authorize_params
+        super.tap do |params|
+          options[:authorize_options].each do |k|
+            params[k] = request.params[k.to_s] unless [nil, ''].include?(request.params[k.to_s])
+          end
+
+          params[:access_type] = 'offline' if params[:access_type].nil?
+        end
+      end
 
       uid{ raw_info['id'] }
 
