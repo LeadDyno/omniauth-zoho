@@ -11,7 +11,7 @@ module OmniAuth
       }
 
       option provider_ignores_state: true
-      option :authorize_options, %i[access_type prompt]
+      option :authorize_options, %i[access_type prompt scope]
 
       def authorize_params
         super.tap do |params|
